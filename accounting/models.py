@@ -52,6 +52,9 @@ class Category(models.Model):
     category_id = models.BigAutoField(primary_key=True, verbose_name="id")
     category_name = models.CharField(max_length=255, verbose_name="Название категории")
     #выбор чоиса на доход/расход
+    #picture
+    #user
+    #дата создания
 
     def __str__(self):
         return self.category_name
