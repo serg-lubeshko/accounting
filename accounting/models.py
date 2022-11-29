@@ -41,6 +41,7 @@ class Good(models.Model):
     # code = models.ForeignKey(Code, on_delete=models.PROTECT, verbose_name="Шифр товара")
     measure = models.ForeignKey(Measure, on_delete=models.DO_NOTHING, blank=True, null=True)
     good_parent = models.ForeignKey('self', on_delete=models.DO_NOTHING, blank=True, null=True)
+    category = models.ForeignKey('Category', on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return self.good_name

@@ -13,6 +13,6 @@ class Command(BaseCommand):
             for item_user in users_data.user_admin:
                 MyUser.objects.create_superuser(**item_user)
 
-        if Category.objects.all().count() == 0:
-            for item in сategory_data.categories:
-                Category.objects.create(**item | {'user_id': 1})
+        # if Category.objects.all().count() == 0:
+        #     for item in сategory_data.categories:
+        #         Category.objects.create(**item | {'user_id': 1})
