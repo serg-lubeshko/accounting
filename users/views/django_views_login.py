@@ -12,10 +12,10 @@ def login(request):
         if form.is_valid():
             username = request.POST.get('username')
             password = request.POST.get('password')
-            user = auth.authenticate(username, password)
+            user = auth.authenticate(username=username, password=password)
             if user:
                 auth.login(request, user)  # +разрешения
-                return HttpResponseRedirect(reverse('index'))
+                return HttpResponseRedirect(reverse('users:login'))
     else:
         form = UserLoginForm()
     context = {'form': form}
