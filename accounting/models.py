@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import MyUser
+
 
 class Store(models.Model):
     """ Магазин """
@@ -52,11 +54,32 @@ class Category(models.Model):
 
     category_id = models.BigAutoField(primary_key=True, verbose_name="id")
     category_name = models.CharField(max_length=255, verbose_name="Название категории")
-    #выбор чоиса на доход/расход
-    #picture
-    #user
-    #дата создания
+
+    # выбор чоиса на доход/расход
+    # picture
+    # user
+    # дата создания
 
     def __str__(self):
         return self.category_name
 
+
+class BasketExpenses(models.Model):
+    """
+    Корзина расходов
+    """
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name="Категория")
+    good = models.ForeignKey(Good, on_delete=models.PROTECT, verbose_name="Товар", blank=True, null=True)
+    count = models.PositiveIntegerField(verbose_name="Количество", default=1)
+    cost = models.DecimalField(verbose_name='Стоимость', max_digits=8, decimal_places=2, default=0)
+    user = models.ForeignKey(MyUser, on_delete=models.PROTECT, verbose_name="Пользователь")
+    date = models.DateTimeField(verbose_name="Дата")
+    total = models.DecimalField(blank=True, null=True, max_digits=8, decimal_places=2, default=0, verbose_name="Всего")
+
+    def __str__(self):
+        return f"{self.category}| {self.good}| {self.count}"
+
+    def save(self, *args, **kwargs):
+        if getattr(self, 'cost', 0):
+            self.total = self.count * self.cost
+        super().save(*args, **kwargs)

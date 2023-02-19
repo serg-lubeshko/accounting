@@ -1,3 +1,6 @@
+from django.conf import settings
+from django.conf.urls.static import static
+
 """costaccounting URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -18,5 +21,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("users/", include("users.urls", namespace="users"))
+    path("users/", include("users.urls", namespace="users")),
+    path("", include("accounting.urls", namespace="accounting"))
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
