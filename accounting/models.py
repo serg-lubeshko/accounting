@@ -75,6 +75,7 @@ class BasketExpenses(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT, verbose_name="Пользователь")
     date = models.DateTimeField(verbose_name="Дата")
     total = models.DecimalField(blank=True, null=True, max_digits=8, decimal_places=2, default=0, verbose_name="Всего")
+    basket = models.PositiveIntegerField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.category}| {self.good}| {self.count}"

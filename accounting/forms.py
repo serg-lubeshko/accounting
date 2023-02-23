@@ -13,3 +13,11 @@ class BasketExpensesForms(forms.ModelForm):
             'cost',
             'date'
         )
+
+        widgets = {
+            "category": forms.TextInput(attrs={"class": "form-control"}),
+            "good": forms.TextInput(attrs={"class": "form-control"}),
+            "count": forms.TextInput(attrs={'class': 'form-control'}),
+            "date": forms.DateInput(attrs={'class': 'form-control'}),
+
+        }
