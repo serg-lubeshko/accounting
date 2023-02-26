@@ -3,6 +3,40 @@ from django.db import models
 from users.models import MyUser
 
 
+class Balance(models.Model):
+    """ Баланс для карт"""
+
+    cur_balance = models.DecimalField(max_digits=20,
+                                      decimal_places=2,
+                                      verbose_name="Текущий баланс")
+    date_last_trans = models.DateTimeField(auto_now=True)
+
+
+class Card(models.Model):
+    """ Карт-Счет"""
+
+    CURRENCY = (
+        ('BYN', 'BYN'),
+        ('USD', 'USD'),
+        ('EUR', 'EUR'),
+        ('RUB', 'RUB'),
+        ('CNY', 'CNY'),
+    )
+    card_name = models.CharField(max_length=125, verbose_name="Название карты")
+    local_cur = models.BooleanField(default=True)
+    currency = models.CharField(
+        max_length=3,
+        choices=CURRENCY,
+        default="BYN",
+    )
+    beg_balance = models.DecimalField(max_digits=20,
+                                      decimal_places=2,
+                                      verbose_name="Начальный баланс",
+                                      default=0)
+
+    cur_balance = models.OneToOneField(Balance, on_delete=models.CASCADE)
+
+
 class Store(models.Model):
     """ Магазин """
 
@@ -73,7 +107,7 @@ class BasketExpenses(models.Model):
     count = models.PositiveIntegerField(verbose_name="Количество", default=1)
     cost = models.DecimalField(verbose_name='Стоимость', max_digits=8, decimal_places=2, default=0)
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT, verbose_name="Пользователь")
-    date = models.DateTimeField(verbose_name="Дата")
+    date = models.DateField(verbose_name="Дата")
     total = models.DecimalField(blank=True, null=True, max_digits=8, decimal_places=2, default=0, verbose_name="Всего")
     basket = models.PositiveIntegerField(blank=True, null=True)
 

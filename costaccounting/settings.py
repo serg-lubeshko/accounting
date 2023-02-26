@@ -57,7 +57,7 @@ ROOT_URLCONF = "costaccounting.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / 'templates']
+        "DIRS": [BASE_DIR / 'accounting/templates']
         ,
         "APP_DIRS": True,
         "OPTIONS": {
@@ -133,6 +133,7 @@ STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (
     BASE_DIR / 'users/templates',
+    BASE_DIR / 'accounting/templates',
 )
 MEDIA_URL = '/media/'
 MEDIA_ROOT = f'{BASE_DIR}/media'
