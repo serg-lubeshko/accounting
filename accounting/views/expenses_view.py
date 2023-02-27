@@ -12,7 +12,7 @@ class ExpensesList(generic.ListView):
     """
 
     model = models.BasketExpenses
-    paginate_by = 100  # if pagination is desired
+    paginate_by = 10
     context_object_name = 'expenses_lists'
     template_name = 'accouting/baskets_expenses.html'
     ordering = "-date"

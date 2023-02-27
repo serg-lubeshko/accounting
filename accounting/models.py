@@ -6,10 +6,13 @@ from users.models import MyUser
 class Balance(models.Model):
     """ Баланс для карт"""
 
-    cur_balance = models.DecimalField(max_digits=20,
-                                      decimal_places=2,
-                                      verbose_name="Текущий баланс")
-    date_last_trans = models.DateTimeField(auto_now=True)
+    cur_summ_balance = models.DecimalField(max_digits=20,
+                                           decimal_places=2,
+                                           verbose_name="Текущий баланс")
+    date_last_trans = models.DateTimeField(auto_now=True, verbose_name="Последняя транзакция")
+
+    def __str__(self):
+        return f"{self.cur_summ_balance}"
 
 
 class Card(models.Model):
@@ -35,6 +38,9 @@ class Card(models.Model):
                                       default=0)
 
     cur_balance = models.OneToOneField(Balance, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.card_name} || {self.cur_balance} {self.currency}"
 
 
 class Store(models.Model):
@@ -110,6 +116,7 @@ class BasketExpenses(models.Model):
     date = models.DateField(verbose_name="Дата")
     total = models.DecimalField(blank=True, null=True, max_digits=8, decimal_places=2, default=0, verbose_name="Всего")
     basket = models.PositiveIntegerField(blank=True, null=True)
+    card = models.ForeignKey(Card, on_delete=models.PROTECT, verbose_name="Карта")
 
     def __str__(self):
         return f"{self.category}| {self.good}| {self.count}"
