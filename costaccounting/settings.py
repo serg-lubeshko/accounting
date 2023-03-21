@@ -39,7 +39,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'accounting.apps.AccountingConfig',
-    'users'
+    'users',
+
+    "django_bootstrap5",
+    "bootstrap_datepicker_plus",
 ]
 
 MIDDLEWARE = [
@@ -66,6 +69,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "context_processor.nav_context"
             ],
         },
     },
@@ -145,3 +149,16 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 AUTH_USER_MODEL = 'users.MyUser'
+
+##########BOOTSTRAP_DATEPICKER_PLUS##################
+# BOOTSTRAP_DATEPICKER_PLUS = {
+#     "options": {
+#         "locale": "ru",
+#     },
+    # "variant_options": {
+    #     "date": {
+    #         "format": "DD-MM-YYYY",
+    #     },
+#     # }
+# }
+##########END BOOTSTRAP_DATEPICKER_PLUS##################

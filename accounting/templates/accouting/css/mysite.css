@@ -1,13 +1,47 @@
 .flex-container {
   display: flex;
-  background-color: DodgerBlue;
+  justify-content: space-between;
+  /*align-items: center;*/
+  flex-wrap: wrap;
+  overflow-x: hidden; /* скрываем горизонтальную прокрутку */
 }
 
-.flex-container > div {
-  background-color: #f1f1f1;
-  margin: 10px;
-  padding: 20px;
-  font-size: 30px;
+/*.container {*/
+/*  height: 50vh;*/
+/*  !*max-height: 400px; !* задаем максимальную высоту контейнера *!*!*/
+/*  overflow-y: auto; !* добавляем вертикальную прокрутку *!*/
+/*}*/
+
+/*.flex-container > div {*/
+/*  background-color: #f2f2f2;*/
+/*  padding: 20px;*/
+/*  border-radius: 10px;*/
+/*}*/
+
+/*.flex-container h2 {*/
+/*  margin-bottom: 10px;*/
+/*}*/
+
+/*.flex-container h6 {*/
+/*  color: #888;*/
+/*}*/
+/*!*Категории топ*!*/
+/*.top-category{*/
+/*  height: 50vh;*/
+/*  overflow-y: scroll;*/
+/*}*/
+
+.top-category__box{
   width: 220px;
-  height: 110px;
+  height: 130px;
+  background-color: #f2f2f2;
+  margin-bottom: 30px;
+  padding: 10px;
+  border-radius: 10px;
+  border: solid 1px black;
+}
+
+.input_store__img {
+    margin-left: 15px;
+    margin-top: -27px;
 }

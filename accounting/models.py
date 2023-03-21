@@ -1,3 +1,6 @@
+import datetime
+
+from django.core.validators import MinValueValidator
 from django.db import models
 
 from users.models import MyUser
@@ -48,9 +51,11 @@ class Store(models.Model):
 
     store_id = models.BigAutoField(primary_key=True, verbose_name="id")
     store_name = models.CharField(max_length=255, verbose_name="Название магазина")
+    store_code = models.IntegerField(verbose_name="Код МСИ", blank=True, null=True)
 
     def __str__(self):
-        return self.store_name
+        return f"{self.store_name} | {self.store_code}"
+
 
 class Code(models.Model):
     """ Шифр товара """
@@ -64,6 +69,7 @@ class Code(models.Model):
 
     def __str__(self):
         return self.code_name
+
 
 class Measure(models.Model):
     """ Единица измерения """
@@ -90,7 +96,7 @@ class Good(models.Model):
 
 
 class Category(models.Model):
-    """ Категория расхода/дохода """
+    """ Категория расхода """
 
     category_id = models.BigAutoField(primary_key=True, verbose_name="id")
     category_name = models.CharField(max_length=255, verbose_name="Название категории")
@@ -111,12 +117,14 @@ class BasketExpenses(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name="Категория")
     good = models.ForeignKey(Good, on_delete=models.PROTECT, verbose_name="Товар", blank=True, null=True)
     count = models.PositiveIntegerField(verbose_name="Количество", default=1)
-    cost = models.DecimalField(verbose_name='Стоимость', max_digits=8, decimal_places=2, default=0)
+    cost = models.DecimalField(verbose_name='Стоимость', max_digits=8, decimal_places=2, default=0,
+                               validators=[MinValueValidator(0)])
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT, verbose_name="Пользователь")
     date = models.DateField(verbose_name="Дата")
     total = models.DecimalField(blank=True, null=True, max_digits=8, decimal_places=2, default=0, verbose_name="Всего")
     basket = models.PositiveIntegerField(blank=True, null=True)
     card = models.ForeignKey(Card, on_delete=models.PROTECT, verbose_name="Карта")
+    store = models.ForeignKey(Store, on_delete=models.PROTECT, verbose_name="Магазины", blank=True, null=True)
 
     def __str__(self):
         return f"{self.category}| {self.good}| {self.count}"
@@ -125,3 +133,26 @@ class BasketExpenses(models.Model):
         if getattr(self, 'cost', 0):
             self.total = self.count * self.cost
         super().save(*args, **kwargs)
+
+
+class BasketIncome(models.Model):
+    """
+    Корзина Доходы
+    """
+    card = models.ForeignKey(Card, on_delete=models.PROTECT, verbose_name="Карта")
+    date = models.DateField(verbose_name="Дата поступления", default=datetime.datetime.utcnow)
+    sum_income = models.DecimalField(max_digits=8, decimal_places=2, default=0, verbose_name="Сумма поступления")
+    source_income = models.ForeignKey("SourceIncome", on_delete=models.PROTECT, verbose_name="Источник дохода")
+
+    def __str__(self):
+        return f"{self.source_income}| {self.sum_income}"
+
+
+class SourceIncome(models.Model):
+    """
+    Источник дохода
+    """
+    source_name = models.CharField(max_length=255, verbose_name="Название источника")
+
+    def __str__(self):
+        return self.source_name

@@ -6,6 +6,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'accouting/css/mysite.css' %}">
     <title>Title</title>
 </head>
@@ -54,20 +55,37 @@
 <main class="container-fluid">
     <div class="row">
         <div class="col-2 colo">
-            Главная
+            <nav>
+                <p>Главная</p>
+                <a href="{% url "accounting:create-expenses" %}">Добавить товар</a> |
+                <p>ВСЕГО НА КАРТЕ: {{ card_sum }}</p>
+                <p>Расходы в текущем месяце: {{ total_expenses_month }}</p>
+                <p>Осталось дней в месяце: {{ remaining_days }}</p>
+                <a href="{% url "accounting:create-income" %}">Добавить источник</a>
+            </nav>
+
         </div>
+
         <div class="col-10">
-            <div class="container" style="height: 50vh">
-                <div class="flex-container">
+            <div class="container top-category" style="height: 50vh; overflow-y: scroll;" >
+                <div class="flex-container" >
                     {% for i in top_products %}
-                    <div >
-                        <h2>{{ i.category__category_name }}</h2>
-                        <h6>{{ i.sum_cat }} BYN тек. месяц</h6>
-                    </div>
+                       <div class = 'top-category__box'>
+                            <h5>{{ i.category__category_name }}</h5>
+                            <h6>{{ i.sum_cat }}BYN <br>тек. месяц</h6>
+                        </div>
                     {% endfor %}
                 </div>
             </div>
+
+
             <div class="container" style="height: 50vh">
+                <form method="get" action="{% url "accounting:basket_expenses" %}">
+                    {% csrf_token %}
+                    <label for="date">Date:</label>
+                    <input type="date" name="date" id="date" value="{{ cur_date }}">
+                    <button type="submit">Filter</button>
+                </form>
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -78,22 +96,34 @@
                         <th scope="col">Всего</th>
                         <th scope="col">Дата</th>
                         <th scope="col">Магазин</th>
+                        <th scope="col">Удалить</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for item in expenses_lists %}
-                    <tr>
-                        <th scope="row">{{ 1 }}</th>
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
 
-                        <td>{{ item.category }}</td>
-                        <td>{{ item.good}}</td>
-                        <td>{{ item.count }}</td>
-                        <td>{{ item.total }}</td>
-                        <td>{{ item.date|date:"d-m-Y" }}</td>
-                        <td>???</td>
-                    </tr>
+                            <td>{{ item.category }}</td>
+                            <td>{{ item.good }}</td>
+                            <td>{{ item.count }}</td>
+                            <td>{{ item.total }}</td>
+                            <td>{{ item.date|date:"d-m-Y" }}</td>
+                            <td>{{ item.store }}</td>
+                            <td>
+                                <form method="POST" action="{% url 'accounting:delete-expenses' pk=item.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                    <button type="submit">Удалить</button>
+                                </form>
+                                </td>
+                        </tr>
                     {% endfor %}
+                    <tr>
+                        <th>ВСЕГО {{ total_amount }}</th>
+                    </tr>
                     </tbody>
+
                 </table>
 
             </div>
@@ -103,11 +133,13 @@
 </main>
 
 
-<form action="{% url "accounting:basket_expenses" %}" method="post">
-    {% csrf_token %}
-    {{ form.as_div }}
-    <input type="submit" value="Submit">
-</form>
+{#<form action="{% url "accounting:basket_expenses" %}" method="post">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_div }}#}
+{#    <input type="submit" value="Submit">#}
+{#</form>#}
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
