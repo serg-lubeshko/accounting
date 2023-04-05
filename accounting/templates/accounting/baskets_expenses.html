@@ -61,16 +61,21 @@
                 <p>ВСЕГО НА КАРТЕ: {{ card_sum }}</p>
                 <p>Расходы в текущем месяце: {{ total_expenses_month }}</p>
                 <p>Осталось дней в месяце: {{ remaining_days }}</p>
-                <a href="{% url "accounting:create-income" %}">Добавить источник</a>
+                <a href="{% url "accounting:create-income" %}"><p> Источник дохода</p></a>
+                <a href="{% url "accounting:add-income" %}"><p> Добавить доход</p></a>
+                <br>
+                <br>
+                <p>Сумма для кэшбэк 2,5%: {{ sum_cash_back }} ### {{ cash_back }}###</p>
+                 <a href="{% url "accounting:basket_expenses_list" %}">Таблица расходов</a> |
             </nav>
 
         </div>
 
         <div class="col-10">
-            <div class="container top-category" style="height: 50vh; overflow-y: scroll;" >
-                <div class="flex-container" >
+            <div class="container top-category" style="height: 50vh; overflow-y: scroll;">
+                <div class="flex-container">
                     {% for i in top_products %}
-                       <div class = 'top-category__box'>
+                        <div class='top-category__box'>
                             <h5>{{ i.category__category_name }}</h5>
                             <h6>{{ i.sum_cat }}BYN <br>тек. месяц</h6>
                         </div>
