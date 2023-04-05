@@ -14,7 +14,7 @@ class ExpensesList(generic.ListView):
     model = models.BasketExpenses
     paginate_by = 10
     context_object_name = 'expenses_lists'
-    template_name = 'accouting/baskets_expenses.html'
+    template_name = 'accounting/baskets_expenses.html'
     ordering = "-date"
     # queryset = models.BasketExpenses.objects.filter(date=datetime.utcnow())
     queryset = models.BasketExpenses.objects.all()
@@ -23,7 +23,7 @@ class ExpensesList(generic.ListView):
         queryset = super().get_queryset()
         date = self.request.GET.get('date')
         if date or self.kwargs.get('date'):
-            queryset = queryset.filter(date=date)
+            queryset = queryset.filter(date=date, user=self.request.user)
         return queryset.filter(user=self.request.user)
 
     def get_context_data(self, **kwargs):
@@ -38,3 +38,24 @@ class ExpensesList(generic.ListView):
     # def get_queryset(self):
     #     queryset = super().get_queryset()
     #     return queryset.filter(user=self.request.user)
+
+
+class ExpensesNewList(generic.ListView):
+    """
+    Выводим список покупок в новый template
+    """
+
+    model = models.BasketExpenses
+    paginate_by = 50
+    context_object_name = 'expenses_lists'
+    template_name = 'accounting/template-expenses-list.html'
+    ordering = "-date"
+    queryset = models.BasketExpenses.objects.all()
+
+    def get_queryset(self, date=0):
+        queryset = super().get_queryset()
+        date = self.request.GET.get('date')
+        print(date)
+        if date or self.kwargs.get('date'):
+            queryset = queryset.filter(date=date, user=self.request.user)
+        return queryset.filter(user=self.request.user)

@@ -6,4 +6,4 @@ from accounting import models
 class DeleteItemView(generic.DeleteView):
     model = models.BasketExpenses
     success_url = "/"
-    template_name = 'accouting/baskets_expenses.html'
+    template_name = 'accounting/baskets_expenses.html'

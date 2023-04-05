@@ -9,6 +9,8 @@ self = "*"
 python-decouple = "3.6"
 psycopg2 = "*"
 pillow = "*"
+django-extensions = "*"
+ipython = "*"
 
 [dev-packages]
 

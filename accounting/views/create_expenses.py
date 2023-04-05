@@ -7,7 +7,7 @@ from accounting.models import BasketExpenses
 from django.contrib import messages
 
 class CreateExpensesView(CreateView):
-    template_name = "accouting/create_acounting.html"
+    template_name = "accounting/create_acounting.html"
     form_class = CreateExpensesForm
     success_url = reverse_lazy('accounting:basket_expenses')
     # model = BasketExpenses
@@ -22,7 +22,6 @@ class CreateExpensesView(CreateView):
 
 
     def form_valid(self, form):
-        print('HERER')
         # Получить объект BasketExpenses из формы, но не сохранять его
         expenses = form.save(commit=False)
         # Установить текущего пользователя как user в BasketExpenses
@@ -39,6 +38,7 @@ class CreateExpensesView(CreateView):
         date = form.cleaned_data.get('date')
         if date:
             # Append the date parameter to the success URL as a query parameter
+            print( f"{self.success_url}?date={date}", 'success_url 41 string')
             self.success_url = f"{self.success_url}?date={date}"
         return super().form_valid(form)
 

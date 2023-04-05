@@ -43,6 +43,8 @@ INSTALLED_APPS = [
 
     "django_bootstrap5",
     "bootstrap_datepicker_plus",
+
+    "django_extensions"
 ]
 
 MIDDLEWARE = [
@@ -76,16 +78,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "costaccounting.wsgi.application"
-
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
 
 DATABASES = {
     'default': {
@@ -161,4 +153,9 @@ AUTH_USER_MODEL = 'users.MyUser'
     #     },
 #     # }
 # }
-##########END BOOTSTRAP_DATEPICKER_PLUS##################
+########## django_extensions##################
+SHELL_PLUS = "ipython"
+SHELL_PLUS_PRINT_SQL = True
+
+# Truncate sql queries to this number of characters (this is the default)
+SHELL_PLUS_PRINT_SQL_TRUNCATE = 10000

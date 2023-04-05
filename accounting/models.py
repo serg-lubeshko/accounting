@@ -114,8 +114,9 @@ class BasketExpenses(models.Model):
     """
     Корзина расходов
     """
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name="Категория")
-    good = models.ForeignKey(Good, on_delete=models.PROTECT, verbose_name="Товар", blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name="Категория", related_name='category')
+    good = models.ForeignKey(Good, on_delete=models.PROTECT, verbose_name="Товар", blank=True, null=True,
+                             related_name='good_basket')
     count = models.PositiveIntegerField(verbose_name="Количество", default=1)
     cost = models.DecimalField(verbose_name='Стоимость', max_digits=8, decimal_places=2, default=0,
                                validators=[MinValueValidator(0)])
@@ -143,6 +144,7 @@ class BasketIncome(models.Model):
     date = models.DateField(verbose_name="Дата поступления", default=datetime.datetime.utcnow)
     sum_income = models.DecimalField(max_digits=8, decimal_places=2, default=0, verbose_name="Сумма поступления")
     source_income = models.ForeignKey("SourceIncome", on_delete=models.PROTECT, verbose_name="Источник дохода")
+    user = models.ForeignKey(MyUser, on_delete=models.PROTECT, verbose_name="Юзер")
 
     def __str__(self):
         return f"{self.source_income}| {self.sum_income}"

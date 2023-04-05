@@ -96,3 +96,14 @@ class SourceIncomeForm(BaseForm):
         fields = (
             'source_name',
         )
+
+
+class AddSourceIncomeForm(BaseForm):
+    class Meta:
+        model = models.BasketIncome
+        fields = (
+            'card',
+            'date',
+            'sum_income',
+            'source_income',
+        )

@@ -5,7 +5,7 @@ from accounting.forms import CreateStoreForm
 
 
 class CreateStoreView(CreateView):
-    template_name = "accouting/form_store.html"
+    template_name = "accounting/form_store.html"
     form_class = CreateStoreForm
 
     success_url = reverse_lazy('accounting:basket_expenses')
