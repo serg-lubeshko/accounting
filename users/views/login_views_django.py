@@ -16,7 +16,7 @@ def login(request):
             user = auth.authenticate(username=username, password=password)
             if user:
                 auth.login(request, user)  # +разрешения
-                return HttpResponseRedirect(reverse('users:profile'))
+                return HttpResponseRedirect(reverse('accounting:basket_expenses_list'))
     else:
         form = UserLoginForm()
     context = {'form': form}

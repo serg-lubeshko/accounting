@@ -103,7 +103,6 @@
                                     {#                                        <input type="submit" class="btn" value="Button" name="mybtn">#}
                                     <div class="d-flex justify-content-around mx-3">
                                         <button type="submit" class="btn btn-primary btn-lg">Register</button>
-                                        <button type="submit" class="btn btn-primary btn-lg">Register</button>
                                     </div>
                                 </form>
 
@@ -130,4 +129,28 @@
 {#    });#}
 {#</script>#}
 </body>
+{#<script>#}
+{#    var countrySelect = document.getElementById('id_category');#}
+    {#countrySelect.addEventListener('change', getCategoryId);#}
+{##}
+{#    function getCategoryId(e) {#}
+{#        console.log(e.target.value)#}
+{#        let categotyValue = e.target.value#}
+{#        fetch(`http://127.0.0.1:8000/form-list-goods/${categotyValue}`,  { async: true })#}
+{#            .then((response) => {#}
+{#                return response.json();#}
+{#            })#}
+{#            .then((data) => {#}
+{#                const goodSelect = document.getElementById('{{ form.good.id_for_label }}');#}
+                 {#goodSelect.innerHTML = '<option value="" selected>---------</option>';;#}
+{#                data.forEach((item) => {#}
+                    {#let option = document.createElement('option');#}
+                    {#option.value = item.id;#}
+                    {#option.textContent = item.good_name;#}
+                    {#goodSelect.appendChild(option);#}
+{#                });#}
+{#            });#}
+{#    }#}
+{##}
+{#</script>#}
 </html>

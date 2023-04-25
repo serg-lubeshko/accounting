@@ -1,9 +1,9 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 from accounting.forms import CreateExpensesForm
-from accounting.models import BasketExpenses
+from accounting.models import BasketExpenses, Category
 from django.contrib import messages
 
 class CreateExpensesView(CreateView):
@@ -42,3 +42,8 @@ class CreateExpensesView(CreateView):
             self.success_url = f"{self.success_url}?date={date}"
         return super().form_valid(form)
 
+def get_goods(request):
+    category_id = request.GET.get('category_id')
+    categories = Category.objects.filter(category_id_id=category_id).values('id', 'name')
+
+    return JsonResponse(categories, safe=False)

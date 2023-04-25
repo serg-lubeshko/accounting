@@ -11,6 +11,7 @@ psycopg2 = "*"
 pillow = "*"
 django-extensions = "*"
 ipython = "*"
+django-tinymce4-lite = "*"
 
 [dev-packages]
 

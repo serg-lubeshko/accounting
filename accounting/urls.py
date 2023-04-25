@@ -4,7 +4,7 @@ from accounting.views.create_expenses import CreateExpensesView
 from accounting.views.create_income_source_view import CreateSourceIncomeView, AddSourceIncomeView
 from accounting.views.create_store import CreateStoreView
 from accounting.views.delete_expenses import DeleteItemView
-from accounting.views.expenses_view import ExpensesList, ExpensesNewList
+from accounting.views.expenses_view import ExpensesList, ExpensesNewList, GoodNewList
 from utils_project.converter import DateConverter
 
 app_name = 'accounting'
@@ -23,5 +23,6 @@ urlpatterns = [
     path("create-source-income/", CreateSourceIncomeView.as_view(), name="create-income"),
     path("add-source-income/", AddSourceIncomeView.as_view(), name="add-income"),
     path("delete-expenses/<int:pk>", DeleteItemView.as_view(), name="delete-expenses"),
+    path("form-list-goods/<int:category_id>", GoodNewList.as_view(), name="new-list-goods"),
 
 ]

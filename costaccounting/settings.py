@@ -159,3 +159,7 @@ SHELL_PLUS_PRINT_SQL = True
 
 # Truncate sql queries to this number of characters (this is the default)
 SHELL_PLUS_PRINT_SQL_TRUNCATE = 10000
+
+
+
+LOGIN_URL = 'users/login'
